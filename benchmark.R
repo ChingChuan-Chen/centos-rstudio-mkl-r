@@ -33,7 +33,7 @@ times <- rep(0, 15); dim(times) <- c(5,3)
 require(methods)
 require(Matrix)		# Optimized matrix operations
 if (!"SuppDists" %in% rownames(installed.packages()))
-  install.packages("SuppDists", "https://cran.rstudio.com/")
+  install.packages("SuppDists", repos = "https://cran.rstudio.com/")
 require(SuppDists)	# Optimized random number generators
 Runif <- rMWC1019	# The fast uniform number generator
 # Runif <- runif

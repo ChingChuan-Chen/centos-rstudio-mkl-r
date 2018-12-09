@@ -113,6 +113,7 @@ RUN RSTUDIO_VERSION=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/
 COPY docker-entrypoint.sh /rstudio-server/docker-entrypoint.sh
 COPY keybindings /rstudio-server/keybindings
 COPY user-settings /rstudio-server/user-settings
+COPY benchmark.R /rstudio-server/benchmark.R
 
 # add user and rstudio config
 RUN useradd rstudio && \
@@ -122,6 +123,7 @@ RUN useradd rstudio && \
   cp /rstudio-server/keybindings/*.json /home/rstudio/.R/rstudio/keybindings/ && \
   mkdir -p /home/rstudio/.rstudio/monitored/user-settings && \
   cp /rstudio-server/user-settings/* /home/rstudio/.rstudio/monitored/user-settings/ && \
+  cp /rstudio-server/benchmark.R /home/rstudio && \
   chown -R rstudio: /home/rstudio
 
 EXPOSE 8787

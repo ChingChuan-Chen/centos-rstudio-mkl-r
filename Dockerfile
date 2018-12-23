@@ -30,6 +30,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone &
   echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/intel.conf && ldconfig && \
   cd / && rm -rf l_mkl_2018.3.222* && \
   yum-config-manager --enable rhel-server-rhscl-7-rpms && \
+  rm -rf /var/cache/yum/ && yum makecache fast && \
   yum install -y devtoolset-7 && \
   yum install -y xorg-x11-server-devel libX11-devel libXt-devel libXmu-devel libXext-devel libssh2-devel openssl-devel libcurl-devel readline-devel cyrus-sasl-devel nlopt-devel libquadmath-devel pcre-devel tcl-devel tk-devel zlib-devel bzip2-devel xz-devel libicu-devel libxml2-devel libtiff-devel libjpeg-turbo-devel cairo-devel pango-devel texlive texlive-preprint texinfo-tex pigz pxz java-1.8.0-openjdk-devel unzip
 

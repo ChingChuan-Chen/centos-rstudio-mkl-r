@@ -20,18 +20,11 @@ ENV TZ=Asia/Taipei \
 ## libssh2-devel openssl-devel libcurl-devel readline-devel cyrus-sasl-devel for 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
   yum install -y wget google-noto-cjk-fonts adobe-source-han-sans-twhk-fonts epel-release centos-release-scl && \
-  wget -q http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/13005/l_mkl_2018.3.222.tgz && \
-  tar zxf l_mkl_2018.3.222.tgz && \
-  cd l_mkl_2018.3.222 && \
-  sed -i 's/ACCEPT_EULA=decline/ACCEPT_EULA=accept/g' silent.cfg && \
-  sed -i 's/ARCH_SELECTED=ALL/ARCH_SELECTED=INTEL64/g' silent.cfg && \
-  sed -i 's/COMPONENTS=DEFAULTS/COMPONENTS=;intel-comp-l-all-vars__noarch;intel-comp-nomcu-vars__noarch;intel-openmp__x86_64;intel-tbb-libs__x86_64;intel-mkl-common__noarch;intel-mkl-installer-license__noarch;intel-mkl-core__x86_64;intel-mkl-core-rt__x86_64;intel-mkl-doc__noarch;intel-mkl-doc-ps__noarch;intel-mkl-gnu__x86_64;intel-mkl-gnu-rt__x86_64;intel-mkl-common-ps__noarch;intel-mkl-core-ps__x86_64;intel-mkl-common-c__noarch;intel-mkl-core-c__x86_64;intel-mkl-common-c-ps__noarch;intel-mkl-tbb__x86_64;intel-mkl-tbb-rt__x86_64;intel-mkl-gnu-c__x86_64;intel-mkl-common-f__noarch;intel-mkl-core-f__x86_64;intel-mkl-gnu-f-rt__x86_64;intel-mkl-gnu-f__x86_64;intel-mkl-f95-common__noarch;intel-mkl-f__x86_64;intel-mkl-psxe__noarch;intel-psxe-common__noarch;intel-psxe-common-doc__noarch;intel-compxe-pset/g' silent.cfg && \
-  ./install.sh -s silent.cfg && \
-  echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/intel.conf && ldconfig && \
-  cd / && rm -rf l_mkl_2018.3.222* && \
+  yum-config-manager --add-repo https://yum.repos.intel.com/setup/intelproducts.repo && \
   yum-config-manager --enable rhel-server-rhscl-7-rpms && \
-  rm -rf /var/cache/yum/ && yum makecache fast && \
-  yum install -y devtoolset-7 && \
+  rm -rf /var/cache/yum/ && yes | yum makecache fast && \
+  yum install -y intel-mkl-64bit devtoolset-7 && \
+  echo "/opt/intel/mkl/lib/intel64" >> /etc/ld.so.conf.d/intel.conf && ldconfig && \
   yum install -y xorg-x11-server-devel libX11-devel libXt-devel libXmu-devel libXext-devel libssh2-devel openssl-devel libcurl-devel readline-devel cyrus-sasl-devel nlopt-devel libquadmath-devel pcre-devel tcl-devel tk-devel zlib-devel bzip2-devel xz-devel libicu-devel libxml2-devel libtiff-devel libjpeg-turbo-devel cairo-devel pango-devel texlive texlive-preprint texinfo-tex pigz pxz java-1.8.0-openjdk-devel unzip
 
 # build some deps from source

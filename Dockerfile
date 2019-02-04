@@ -19,7 +19,8 @@ ENV TZ=Asia/Taipei \
 ## pigz pxz for parallel compression/decompression
 ## libssh2-devel openssl-devel libcurl-devel readline-devel cyrus-sasl-devel for 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
-  yum install -y wget google-noto-cjk-fonts adobe-source-han-sans-twhk-fonts epel-release centos-release-scl && \
+  yum install -y wget epel-release centos-release-scl && \
+  yum install -y google-noto-cjk-fonts adobe-source-han-sans-twhk-fonts && \
   yum-config-manager --add-repo https://yum.repos.intel.com/setup/intelproducts.repo && \
   yum-config-manager --enable rhel-server-rhscl-7-rpms && \
   rm -rf /var/cache/yum/ && yes | yum makecache fast && \
